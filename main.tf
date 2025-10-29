@@ -17,7 +17,7 @@ resource "stackit_network" "r" {
   name             = "nw-network-r-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
   ipv4_prefix      = "172.30.0.0/24"
-  routed           = false
+  routed           = true
 }
 
 resource "stackit_network" "l" {
@@ -25,7 +25,7 @@ resource "stackit_network" "l" {
   name             = "nw-network-l-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
   ipv4_prefix      = "172.31.0.0/24"
-  routed           = false
+  routed           = true
 }
 
 resource "stackit_network" "ha_sync" {
@@ -141,18 +141,21 @@ resource "stackit_network_interface" "fortigate1_private01" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.private01.network_id
   security   = false
+  ipv4       = "172.29.0.3"
 }
 
 resource "stackit_network_interface" "fortigate1_network_r" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.r.network_id
   security   = false
+  ipv4       = "172.30.0.3"
 }
 
 resource "stackit_network_interface" "fortigate1_network_l" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.l.network_id
   security   = false
+  ipv4       = "172.31.0.3"
 }
 
 resource "stackit_network_interface" "fortigate1_ha_sync" {
@@ -191,19 +194,16 @@ resource "stackit_server" "fortigate1" {
   end
   config system interface
     edit port1
-      set mode static
-      set ip 172.29.0.3 255.255.255.0
+      set mode dhcp
       set allowaccess http https ssh ping
     next
     edit port2
-      set mode static
-      set ip 172.30.0.3 255.255.255.0
+      set mode dhcp
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
-      set mode static
-      set ip 172.31.0.3 255.255.255.0
+      set mode dhcp
       set defaultgw disable
       set allowaccess http https ssh ping
     next
@@ -258,18 +258,21 @@ resource "stackit_network_interface" "fortigate2_private01" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.private01.network_id
   security   = false
+  ipv4       = "172.29.0.4"
 }
 
 resource "stackit_network_interface" "fortigate2_network_r" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.r.network_id
   security   = false
+  ipv4       = "172.30.0.4"
 }
 
 resource "stackit_network_interface" "fortigate2_network_l" {
   project_id = stackit_resourcemanager_project.fortigate.project_id
   network_id = stackit_network.l.network_id
   security   = false
+  ipv4       = "172.31.0.4"
 }
 
 resource "stackit_network_interface" "fortigate2_ha_sync" {
@@ -308,19 +311,16 @@ resource "stackit_server" "fortigate2" {
   end
   config system interface
     edit port1
-      set mode static
-      set ip 172.29.0.4 255.255.255.0
+      set mode dhcp
       set allowaccess http https ssh ping
     next
     edit port2
-      set mode static
-      set ip 172.30.0.4 255.255.255.0
+      set mode dhcp
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
-      set mode static
-      set ip 172.31.0.4 255.255.255.0
+      set mode dhcp
       set defaultgw disable
       set allowaccess http https ssh ping
     next
