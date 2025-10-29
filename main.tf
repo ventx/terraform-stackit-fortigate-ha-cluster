@@ -194,16 +194,19 @@ resource "stackit_server" "fortigate1" {
   end
   config system interface
     edit port1
-      set mode dhcp
+      set mode static
+      set ip 172.29.0.3 255.255.255.0
       set allowaccess http https ssh ping
     next
     edit port2
-      set mode dhcp
+      set mode static
+      set ip 172.30.0.3 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
-      set mode dhcp
+      set mode static
+      set ip 172.31.0.3 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
@@ -219,14 +222,6 @@ resource "stackit_server" "fortigate1" {
   end
   config system dns
     set primary 9.9.9.9
-  end
-  config system ha
-    set group-name "group-01"
-    set mode a-p
-    set password "qfNTDkjKHkZre5VSWKJi"
-    set hbdev "port4" 50
-    set override disable
-    set monitor "port2"
   end
   config firewall policy
     edit 1
@@ -311,16 +306,19 @@ resource "stackit_server" "fortigate2" {
   end
   config system interface
     edit port1
-      set mode dhcp
+      set mode static
+      set ip 172.29.0.4 255.255.255.0
       set allowaccess http https ssh ping
     next
     edit port2
-      set mode dhcp
+      set mode static
+      set ip 172.30.0.4 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
-      set mode dhcp
+      set mode static
+      set ip 172.31.0.4 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
@@ -336,14 +334,6 @@ resource "stackit_server" "fortigate2" {
   end
   config system dns
     set primary 9.9.9.9
-  end
-  config system ha
-    set group-name "group-01"
-    set mode a-p
-    set password "qfNTDkjKHkZre5VSWKJi"
-    set hbdev "port4" 50
-    set override disable
-    set monitor "port2"
   end
   config firewall policy
     edit 1
