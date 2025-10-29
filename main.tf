@@ -8,7 +8,7 @@ resource "stackit_network" "private01" {
   project_id       = stackit_resourcemanager_project.fortigate.project_id
   name             = "nw-private01-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
-  ipv4_prefix      = "172.31.0.0/24"
+  ipv4_prefix      = "172.29.0.0/24"
   routed           = true
 }
 
@@ -16,7 +16,7 @@ resource "stackit_network" "r" {
   project_id       = stackit_resourcemanager_project.fortigate.project_id
   name             = "nw-network-r-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
-  ipv4_prefix      = "172.32.0.0/24"
+  ipv4_prefix      = "172.30.0.0/24"
   routed           = false
 }
 
@@ -24,7 +24,7 @@ resource "stackit_network" "l" {
   project_id       = stackit_resourcemanager_project.fortigate.project_id
   name             = "nw-network-l-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
-  ipv4_prefix      = "172.33.0.0/24"
+  ipv4_prefix      = "172.31.0.0/24"
   routed           = false
 }
 
@@ -32,7 +32,7 @@ resource "stackit_network" "ha_sync" {
   project_id       = stackit_resourcemanager_project.fortigate.project_id
   name             = "nw-ha-sync-${var.environment}"
   ipv4_nameservers = ["9.9.9.9"]
-  ipv4_prefix      = "169.254.0.0/24"
+  ipv4_prefix      = "192.168.0.0/24"
   routed           = false
 }
 
@@ -76,7 +76,7 @@ resource "stackit_network_interface" "alpine_r" {
   project_id         = stackit_resourcemanager_project.fortigate.project_id
   network_id         = stackit_network.r.network_id
   security_group_ids = [stackit_security_group.web.security_group_id]
-  ipv4               = "172.32.0.5"
+  ipv4               = "172.30.0.5"
 }
 
 resource "stackit_public_ip" "alpine_r" {
@@ -103,7 +103,7 @@ resource "stackit_network_interface" "alpine_l" {
   project_id         = stackit_resourcemanager_project.fortigate.project_id
   network_id         = stackit_network.l.network_id
   security_group_ids = [stackit_security_group.web.security_group_id]
-  ipv4               = "172.33.0.5"
+  ipv4               = "172.31.0.5"
 }
 
 resource "stackit_public_ip" "alpine_l" {
@@ -192,18 +192,18 @@ resource "stackit_server" "fortigate1" {
   config system interface
     edit port1
       set mode static
-      set ip 172.31.0.3 255.255.255.0
+      set ip 172.29.0.3 255.255.255.0
       set allowaccess http https ssh ping
     next
     edit port2
       set mode static
-      set ip 172.32.0.3 255.255.255.0
+      set ip 172.30.0.3 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
       set mode static
-      set ip 172.33.0.3 255.255.255.0
+      set ip 172.31.0.3 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
@@ -214,7 +214,7 @@ resource "stackit_server" "fortigate1" {
   end
   config router static
     edit 1
-      set gateway 172.31.0.1
+      set gateway 172.29.0.1
       set device "port1"
   end
   config system dns
@@ -309,18 +309,18 @@ resource "stackit_server" "fortigate2" {
   config system interface
     edit port1
       set mode static
-      set ip 172.31.0.4 255.255.255.0
+      set ip 172.29.0.4 255.255.255.0
       set allowaccess http https ssh ping
     next
     edit port2
       set mode static
-      set ip 172.32.0.4 255.255.255.0
+      set ip 172.30.0.4 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
     edit port3
       set mode static
-      set ip 172.33.0.4 255.255.255.0
+      set ip 172.31.0.4 255.255.255.0
       set defaultgw disable
       set allowaccess http https ssh ping
     next
@@ -331,7 +331,7 @@ resource "stackit_server" "fortigate2" {
   end
   config router static
     edit 1
-      set gateway 172.31.0.1
+      set gateway 172.29.0.1
       set device "port1"
   end
   config system dns
