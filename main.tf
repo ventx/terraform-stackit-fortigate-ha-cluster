@@ -247,6 +247,10 @@ resource "stackit_server" "fortigate1" {
       set nat enable
   end
   EOT
+
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 }
 
 resource "stackit_network_interface" "fortigate2_private01" {
@@ -359,4 +363,8 @@ resource "stackit_server" "fortigate2" {
       set nat enable
   end
   EOT
+
+  lifecycle {
+    ignore_changes = [user_data]
+  }
 }
