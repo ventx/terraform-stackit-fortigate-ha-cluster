@@ -18,6 +18,7 @@ resource "stackit_network" "r" {
   ipv4_nameservers = ["9.9.9.9"]
   ipv4_prefix      = "172.30.0.0/24"
   routed           = true
+  ipv4_gateway     = "172.30.0.3"
 }
 
 resource "stackit_network" "l" {
@@ -26,6 +27,7 @@ resource "stackit_network" "l" {
   ipv4_nameservers = ["9.9.9.9"]
   ipv4_prefix      = "172.31.0.0/24"
   routed           = true
+  ipv4_gateway     = "172.31.0.3"
 }
 
 resource "stackit_network" "ha_sync" {
